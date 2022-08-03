@@ -8,6 +8,9 @@ namespace NewsWebsite.Data.Entities
     {
         public int IdCatalog { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; } 
+        public string Description { get; set; }
+        public List<CatalogInUser> CatalogInUsers { get; set; }
+        public List<NewsInCatalog> NewsInCatalogs{ get; set; }
+
     }
 }

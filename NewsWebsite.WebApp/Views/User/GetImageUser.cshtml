@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @model NewsWebsite.ViewModel.Image.ImageUser.ImageUserUpdateRequest
+    Layout = "~/Views/Shared/_OptionsInfoUserLayout.cshtml";
+            
+
+}
+<div class="col-md-9 m-0 mt-2">
+    <div class="card mb-2 bg-light">
+        <h1 class="text-center mt-2 mb-3">Ảnh đại diện</h1>
+        @if (ViewData["path"] != null)
+        {
+            <div class="text-center">
+                <img src=@ViewData["path"] alt="" width="120px" height="160px">
+            </div>
+        }
+        else
+        {
+            <div class="text-center text-danger">Không tìm thấy ảnh người dùng</div>
+        }
+        <br />
+        <br />
+        <br />
+        <form asp-controller="User" asp-action="UpdateImageUser" method="post">
+            <input asp-for="Id" type="text" value=@ViewData["UserID"].ToString() hidden />
+            <div class="text-center">
+                <label for="img" style="font-size: large; font-weight: 600;">
+                    Chọn ảnh:
+                </label>
+                <input asp-for="ImageFile" type="file" id="img" name="img" accept="image/*">
+            </div>
+            <div class="d-flex justify-content-center pt-3">
+                <button type="submit" class="btn btn-warning btn-lg ms-2 mb-2">Đặt làm ảnh đại diện</button>
+            </div>
+        </form>
+    </div>
+</div>

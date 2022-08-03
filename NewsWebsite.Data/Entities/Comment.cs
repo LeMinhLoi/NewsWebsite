@@ -6,10 +6,15 @@ namespace NewsWebsite.Data.Entities
 {
     public class Comment
     {
-        public int IdUser { get; set; }
-        public int IdNews { get; set; }
-        public int UserInfo { get; set; }
-        public int News { get; set; }
+        public int Id { get; set; }
+        public Guid IdUser { get; set; }
+        public Guid IdNews { get; set; }
+        public UserInfo UserInfo { get; set; }
+        public News News { get; set; }
         public string Content { get; set; }
+        public DateTime DateComment { get; set; }
+        public int? ParentId { get; set; }// to conduct function reply in facebook
+        public List<UserInfo> UserInfos { get; set; }
+        //public List<ReportComment> ReportComments { get; set; }
     }
 }

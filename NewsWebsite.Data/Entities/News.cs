@@ -6,15 +6,19 @@ namespace NewsWebsite.Data.Entities
 {
     public class News
     {
-        public int IdNews { get; set; }
+        public Guid IdNews { get; set; }
         public string Tittle { get; set; }
         public DateTime DateCreate { get; set; }
         public int ViewCount { get; set; }
         public bool IsAccept { get; set; }
-        public int IdContentNews { get; set; }
-        public ContentNews ContentNews { get; set; }
-
-
+        public string Content { get; set; }
+        public Guid IdAuthor { get; set; }
+        //public UserInfo UserInfo { get; set; }
+        public List<HistoryLike> HistoryLikes { get; set; }
+        public List<HistoryView> HistoryViews{ get; set; }
+        public List<Comment> Comments{ get; set; }
+        public List<NewsInCatalog> NewsInCatalogs { get; set; }
+        public List<ImageInNews> ImageInNews{ get; set; }
     }
 
 }

@@ -5,11 +5,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="EF\" />
+    <Compile Remove="Migrations\20220722032439_InitialDatabase.cs" />
+    <Compile Remove="Migrations\20220722032439_InitialDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20220722035324_InitialDatabase.cs" />
+    <Compile Remove="Migrations\20220722035324_InitialDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20220722040238_InitialDatabase.cs" />
+    <Compile Remove="Migrations\20220722040238_InitialDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20220726140634_CreateDB.cs" />
+    <Compile Remove="Migrations\20220726140634_CreateDB.Designer.cs" />
+    <Compile Remove="Migrations\20220726140819_CreateDB.cs" />
+    <Compile Remove="Migrations\20220726140819_CreateDB.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.0" />
   </ItemGroup>
 
 </Project>

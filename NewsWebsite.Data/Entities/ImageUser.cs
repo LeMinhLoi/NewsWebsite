@@ -6,10 +6,9 @@ namespace NewsWebsite.Data.Entities
 {
     public class ImageUser
     {
-        public int IdImage { get; set; }
+        public Guid IdImage { get; set; }
         public string Path { get; set; }
-        public string Tittle { get; set; }
-
+        public UserInfo UserInfo { get; set; }
     }
 
 }

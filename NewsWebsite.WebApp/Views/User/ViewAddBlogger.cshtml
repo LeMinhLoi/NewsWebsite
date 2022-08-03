@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @model NewsWebsite.ViewModel.User.UserCreateRequest
+}
+
+<form enctype="multipart/form-data" asp-controller="User" asp-action="AddBlogger" method="post">
+    <div class="row">
+        <div class="col-md-6 m-0 mt-2">
+            <div class="card m-0 bg-light">
+                <h2 class="text-center mt-2">Thông tin cá nhân của blogger</h2>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        Last Name
+                    </label>
+                    <input asp-for="LastName" type="text" class="form-control form-control-lg" />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        First
+                        Name
+                    </label>
+                    <input asp-for="FirstName" type="text" class="form-control form-control-lg" />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        Nick
+                        Name
+                    </label>
+                    <input asp-for="NickName" type="text" class="form-control form-control-lg" />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label"
+                           style="font-weight: 500;">Phone</label>
+                    <input asp-for="Phone" type="text" class="form-control form-control-lg" />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label"
+                           style="font-weight: 500;">Email</label>
+                    <input asp-for="Email" type="text" class="form-control form-control-lg" />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        Date of birth
+                    </label>
+                    <input asp-for="DoB" type="date" class="form-control form-control-lg" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 m-0 mt-2 mb-3">
+            <div class="card mb-2 bg-light">
+                <h1 class="text-center mt-2 mb-3">Ảnh của blogger</h1>
+                <div class="text-center mb-3">
+                    <input asp-for="ImageUser" type="file" accept="image/*">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="d-flex justify-content-center pt-3">
+                    <button type="submit" class="btn btn-warning btn-lg ms-2 mb-2">Add blogger</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

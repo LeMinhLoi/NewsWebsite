@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.OpenApi" Version="1.3.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NewsWebsite.Application\NewsWebsite.Application.csproj" />
+    <ProjectReference Include="..\NewsWebsite.Data\NewsWebsite.Data.csproj" />
+    <ProjectReference Include="..\NewsWebsite.Utilities\NewsWebsite.Utilities.csproj" />
+    <ProjectReference Include="..\NewsWebsite.ViewModel\NewsWebsite.ViewModel.csproj" />
+  </ItemGroup>
+
+
+</Project>

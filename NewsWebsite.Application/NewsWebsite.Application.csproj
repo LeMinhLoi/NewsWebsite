@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NewsWebsite.Data\NewsWebsite.Data.csproj" />
+    <ProjectReference Include="..\NewsWebsite.Utilities\NewsWebsite.Utilities.csproj" />
+    <ProjectReference Include="..\NewsWebsite.ViewModel\NewsWebsite.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

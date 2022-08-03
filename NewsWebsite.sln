@@ -3,7 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32630.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsWebsite.Data", "NewsWebsite.Data\NewsWebsite.Data.csproj", "{FE52BAAF-335E-422D-B28D-C4276836F3F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsWebsite.Data", "NewsWebsite.Data\NewsWebsite.Data.csproj", "{FE52BAAF-335E-422D-B28D-C4276836F3F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{29501BF7-1A34-4865-ABE5-5587ECBA3477}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.txt = Readme.txt
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsWebsite.Application", "NewsWebsite.Application\NewsWebsite.Application.csproj", "{CF98BBFD-38EE-44ED-85EE-098B7A680C68}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsWebsite.ViewModel", "NewsWebsite.ViewModel\NewsWebsite.ViewModel.csproj", "{A760E527-67E9-4888-90AA-396254F1D6F0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsWebsite.Utilities", "NewsWebsite.Utilities\NewsWebsite.Utilities.csproj", "{B3E8E50D-CFA3-489B-A5BA-2A1F0F0D28DE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsWebsite.BackendApi", "NewsWebsite.BackendApi\NewsWebsite.BackendApi.csproj", "{35C27815-8624-4AC4-9394-21A1089B7E60}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsWebsite.WebApp", "NewsWebsite.WebApp\NewsWebsite.WebApp.csproj", "{E02B4568-9A9B-4846-957D-289FC94B0E99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsWebsite.IntegrationApi", "NewsWebsite.IntegrationApi\NewsWebsite.IntegrationApi.csproj", "{0E8C438F-5486-4D65-B780-90AFC1D614CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +32,30 @@ Global
 		{FE52BAAF-335E-422D-B28D-C4276836F3F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE52BAAF-335E-422D-B28D-C4276836F3F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE52BAAF-335E-422D-B28D-C4276836F3F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF98BBFD-38EE-44ED-85EE-098B7A680C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF98BBFD-38EE-44ED-85EE-098B7A680C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF98BBFD-38EE-44ED-85EE-098B7A680C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF98BBFD-38EE-44ED-85EE-098B7A680C68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A760E527-67E9-4888-90AA-396254F1D6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A760E527-67E9-4888-90AA-396254F1D6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A760E527-67E9-4888-90AA-396254F1D6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A760E527-67E9-4888-90AA-396254F1D6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3E8E50D-CFA3-489B-A5BA-2A1F0F0D28DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E8E50D-CFA3-489B-A5BA-2A1F0F0D28DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E8E50D-CFA3-489B-A5BA-2A1F0F0D28DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E8E50D-CFA3-489B-A5BA-2A1F0F0D28DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35C27815-8624-4AC4-9394-21A1089B7E60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35C27815-8624-4AC4-9394-21A1089B7E60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35C27815-8624-4AC4-9394-21A1089B7E60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35C27815-8624-4AC4-9394-21A1089B7E60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E02B4568-9A9B-4846-957D-289FC94B0E99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E02B4568-9A9B-4846-957D-289FC94B0E99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E02B4568-9A9B-4846-957D-289FC94B0E99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E02B4568-9A9B-4846-957D-289FC94B0E99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E8C438F-5486-4D65-B780-90AFC1D614CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E8C438F-5486-4D65-B780-90AFC1D614CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E8C438F-5486-4D65-B780-90AFC1D614CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E8C438F-5486-4D65-B780-90AFC1D614CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,228 @@
+﻿@{
+    @model NewsWebsite.ViewModel.User.UserVM
+    Layout = "~/Views/Shared/_OptionsInfoUserLayout.cshtml";
+    string dob = Model.DoB.ToString("yyyy-MM-dd");
+}
+<!--<div class="row">
+    <div class="col-md-3 m-0 mt-2">
+        <div class="card">
+            <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab" role="tablist"
+                 aria-orientation="vertical">
+                <a class="nav-link" data-mdb-toggle="tab" role="tab" href="/detail/info/{@Model.Id}">Thông tin cá nhân</a>
+                <a class="nav-link" data-mdb-toggle="tab" role="tab" href="/image/{@Model.Id}">Ảnh đại diện</a>
+                <a class="nav-link" data-mdb-toggle="tab" role="tab" href="/update/password/{@Model.Id}">Đổi mật khẩu</a>
+            </div>
+        </div>-->
+
+        <!-- Tab navs -->
+    <!--</div>
+    <div class="col-md-9 m-0 mt-2">
+        <div class="card m-0 bg-light">
+            <h2 class="text-center mt-2">Thông tin cá nhân của tôi</h2>
+            <form id="frmLogin" asp-action="Edit" asp-controller="User">
+
+                <input asp-for="Id" type="text" class="form-control form-control-lg"
+                         value=@Model.Id hidden/>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        Last Name
+                    </label>
+                    <input asp-for="LastName" type="text" class="form-control form-control-lg"
+                           value=@Model.LastName />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        First
+                        Name
+                    </label>
+                    <input asp-for="FirstName" type="text" class="form-control form-control-lg"
+                           value=@Model.FirstName />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        Nick
+                        Name
+                    </label>
+                    <input asp-for="NickName" type="text" class="form-control form-control-lg"
+                           value=@Model.NickName />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label"
+                           style="font-weight: 500;">Phone</label>
+                    <input asp-for="Phone" type="text"
+                           class="form-control form-control-lg"
+                           value=@Model.Phone />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label"
+                           style="font-weight: 500;">Email</label>
+                    <input asp-for="Email" type="text" class="form-control form-control-lg"
+                           value=@Model.Email />
+                </div>
+
+
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">Date of birth</label>
+                    <div class="form-group col-sm-12 mb-10">
+                        <input asp-for="DoB" class="form-control form-control-lg" type="text"
+                               value=@Model.DoB.ToString("dd-mm-yyyy") />
+                    </div>
+                </div>
+
+                <div class="row mb-4 mx-4">
+                    <div class="d-md-flex justify-content-around align-items-start mb-3 mt-3 py-2 col-md-6">
+                        <h6 class="mb-0 me-4" style="font-weight: 500; font-size: larger;">
+                            Gender:
+                        </h6>
+                        @{
+                            @if (Model.Gender == true)
+                            {
+                                <div class="form-check form-check-inline mb-0 me-4">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                           id="femaleGender" value="option1" />
+                                    <label class="form-check-label" for="femaleGender">Female</label>
+                                </div>
+
+
+                                <div class="form-check form-check-inline mb-0 me-4">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                           id="maleGender" value="option2" checked="true" />
+                                    <label class="form-check-label" for="maleGender">Male</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-check form-check-inline mb-0 me-4">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                           id="femaleGender" value="option1" checked="true" />
+                                    <label class="form-check-label" for="femaleGender">Female</label>
+                                </div>
+
+
+                                <div class="form-check form-check-inline mb-0 me-4">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                           id="maleGender" value="option2" />
+                                    <label class="form-check-label" for="maleGender">Male</label>
+                                </div>
+                            }
+                        }
+
+
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center pt-3">
+                    <button type="submit" class="btn btn-warning btn-lg ms-2 mb-2">
+                        Update
+                        information
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>-->
+
+
+<div class="col-md-9 m-0 mt-2">
+    <div class="card m-0 bg-light">
+        <h2 class="text-center mt-2">Thông tin cá nhân</h2>
+        <form id="frmLogin" asp-action="Edit" asp-controller="User" method="post">
+
+            <input asp-for="Id" type="text" class="form-control form-control-lg"
+                   value=@Model.Id hidden />
+            <div class="form-outline mb-4 mx-4">
+                <label class="form-label" style="font-weight: 500;">
+                    Họ
+                </label>
+                <input asp-for="LastName" type="text" class="form-control form-control-lg"
+                       value=@Model.LastName />
+            </div>
+            <div class="form-outline mb-4 mx-4">
+                <label class="form-label" style="font-weight: 500;">
+                    Tên
+                </label>
+                <input asp-for="FirstName" type="text" class="form-control form-control-lg"
+                       value=@Model.FirstName />
+            </div>
+            <div class="form-outline mb-4 mx-4">
+                <label class="form-label" style="font-weight: 500;">
+                    Nickname
+                </label>
+                <input asp-for="NickName" type="text" class="form-control form-control-lg"
+                       value=@Model.NickName />
+            </div>
+            <div class="form-outline mb-4 mx-4">
+                <label class="form-label"
+                       style="font-weight: 500;">Số điện thoại</label>
+                <input asp-for="Phone" type="text"
+                       class="form-control form-control-lg"
+                       value=@Model.Phone />
+            </div>
+            <div class="form-outline mb-4 mx-4">
+                <label class="form-label"
+                       style="font-weight: 500;">Email</label>
+                <input asp-for="Email" type="text" class="form-control form-control-lg"
+                       value=@Model.Email />
+            </div>
+
+
+            <div class="form-outline mb-4 mx-4">
+                <label class="form-label" style="font-weight: 500;">Ngày sinh</label>
+                <div class="form-group col-sm-12 mb-10">
+                    <input asp-for="DoB" class="form-control form-control-lg" type="date"
+                           value=@dob />
+                </div>
+            </div>
+
+            <div class="row mb-4 mx-4">
+                <div class="d-md-flex justify-content-around align-items-start mb-3 mt-3 py-2 col-md-6">
+                    <h6 class="mb-0 me-4" style="font-weight: 500; font-size: larger;">
+                        Giới tính:
+                    </h6>
+                    @{
+                        @if (Model.Gender == true)
+                        {
+                            <div class="form-check form-check-inline mb-0 me-4">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                       id="femaleGender" value="option1" />
+                                <label class="form-check-label" for="femaleGender">Female</label>
+                            </div>
+
+
+                            <div class="form-check form-check-inline mb-0 me-4">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                       id="maleGender" value="option2" checked="true" />
+                                <label class="form-check-label" for="maleGender">Male</label>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-check form-check-inline mb-0 me-4">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                       id="femaleGender" value="option1" checked="true" />
+                                <label class="form-check-label" for="femaleGender">Female</label>
+                            </div>
+
+
+                            <div class="form-check form-check-inline mb-0 me-4">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                       id="maleGender" value="option2" />
+                                <label class="form-check-label" for="maleGender">Male</label>
+                            </div>
+                        }
+                    }
+
+
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center pt-3">
+                <button type="submit" class="btn btn-warning btn-lg ms-2 mb-2">
+                    Cập nhật thông tin
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>

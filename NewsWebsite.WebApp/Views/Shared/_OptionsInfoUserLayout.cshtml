@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @*@model NewsWebsite.ViewModel.User.UserVM*@
+    //var Id = "F2C7B584-2BEC-4A0C-896B-0AAE5084AFE0";
+}
+<div class="row">
+    <div class="col-md-3 m-0 mt-2">
+        <div class="card">
+            <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab" role="tablist"
+                 aria-orientation="vertical">
+                <a class="nav-link" data-mdb-toggle="tab" role="tab" href="/detail/info/{@ViewData["UserID"]}">Thông tin cá nhân</a>
+                <a class="nav-link" data-mdb-toggle="tab" role="tab" href="/image/{@ViewData["UserID"]}">Ảnh đại diện</a>
+                <a class="nav-link" data-mdb-toggle="tab" role="tab" href="/update/password/{@ViewData["UserID"]}">Đổi mật khẩu</a>
+            </div>
+        </div>
+
+        <!-- Tab navs -->
+    </div>
+    @RenderBody()
+</div>
+
