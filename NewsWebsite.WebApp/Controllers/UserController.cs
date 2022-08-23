@@ -9,7 +9,6 @@ using NewsWebsite.ViewModel.Image.ImageUser;
 using NewsWebsite.ViewModel.PasswordVM;
 using NewsWebsite.ViewModel.User;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NewsWebsite.WebApp.Controllers
@@ -42,43 +41,51 @@ namespace NewsWebsite.WebApp.Controllers
             return RedirectToAction("Index", "Login");//redirect to login page
         }
 
-
-        //function get detail info of user, need ID
-        [HttpGet("detail/info/{id}")]
-        public async Task<IActionResult> DetailsUser(Guid id)
-        {
-            var result = await _userApiClient.GetById(id); //call api
-            ViewData["UserID"] = result.ResultObj.Id;
-            return View(result.ResultObj);
-        }
-
-
         //function get detail info myself, myID was saved in IdentityClaims
-        [HttpGet("detail/info/myself")]
-        public async Task<IActionResult> DetailsUser()
+        [HttpGet("edit/myself")]
+        public async Task<IActionResult> EditUser()
         {
             Guid id = new Guid(HttpContext.Session.GetString("UserID")); //get ID
             var result = await _userApiClient.GetById(id); //call api
-            ViewData["UserID"] = result.ResultObj.Id;
+            if (result.ResultObj.PathImageAvatar != null)
+            {
+                result.ResultObj.PathImageAvatar = _configuration["BaseAddress"] + CreatePathImage.PathImage(result.ResultObj.PathImageAvatar);
+            }
+            return View(result.ResultObj);
+        }
+        //function get detail info of user, need ID
+        [HttpGet("edit/info/{id}")]
+        public async Task<IActionResult> EditUser(Guid id)
+        {
+            var result = await _userApiClient.GetById(id); //call api
+            if(result.ResultObj.PathImageAvatar != null)
+            {
+                result.ResultObj.PathImageAvatar = _configuration["BaseAddress"] + CreatePathImage.PathImage(result.ResultObj.PathImageAvatar);
+            }
             return View(result.ResultObj);
         }
 
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            var result = await _userApiClient.GetById(id); //call api
+            return new OkObjectResult(result.ResultObj);
+        }
+
+
+
         //function update info of user
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Edit(UserUpdateRequest request) //object include ID
         {
             if (!ModelState.IsValid)
                 return RedirectToAction("Index", "Home");
-
             var result = await _userApiClient.UpdateUser(request.Id, request);
             if (result.IsSuccessed)
             {
-                TempData["result"] = "Cập nhật người dùng thành công";
-                return RedirectToAction("DetailsUser","User", new { id = request.Id}); //redirect to page detail info
+                return RedirectToAction("ListBlogger", "User"); //redirect to page detail info
             }
-
-            ModelState.AddModelError("", result.Message);
-            return RedirectToAction("Index", "Home");
+            return BadRequest(result);
         }
 
         //fuction get Image of user via ID User and display
@@ -89,7 +96,7 @@ namespace NewsWebsite.WebApp.Controllers
             var apiResult = await _userApiClient.GetImageUserById(UserID);//apiResult<ImageUserVM>
             if (apiResult.IsSuccessed)
             {
-                String pathImage = "https://localhost:5001/" + CreatePathImage.PathImage(apiResult.ResultObj.ImagePath);
+                String pathImage = _configuration["BaseAddress"] + CreatePathImage.PathImage(apiResult.ResultObj.ImagePath);
                 ViewData["path"] = pathImage;
             }
             ViewData["UserID"] = UserID;
@@ -97,17 +104,17 @@ namespace NewsWebsite.WebApp.Controllers
         }
 
         //function change/update image
-        [HttpPost("update/image")]
+        [HttpPost()]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> UpdateImageUser(ImageUserUpdateRequest request)
+        public async Task<IActionResult> UpdateImageAsync(ImageUserUpdateRequest request)
         {
 
             var result = await _userApiClient.UpdateImageUser(request);
             if(result == true)
             {
-                return Redirect("image/" + request.Id.ToString());
+                return RedirectToAction("GetImageUser", "User", new { UserID = request.Id });
             }
-            return Redirect("index");
+            return RedirectToAction("DetailsUser", "User", new { id = request.Id });
         }
 
 
@@ -120,46 +127,46 @@ namespace NewsWebsite.WebApp.Controllers
         }
 
         //change password
-        //[HttpPost("change-password/{UserID}")]
-        //public async Task<IActionResult> ChangePassword(string newPassword, string confirmPassword)
-        //{
-        //    var result = await _userApiClient.ChangePassword(id, newPassword);
-        //    if (result.IsSuccessed)
-        //    {
-        //        return RedirectToAction("DetailsMyself");
+        [HttpPost("change-password")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> ChangePasswordUser(PasswordVM request)
+        {
+            var result = await _userApiClient.ChangePassword(request);
+            if (result.IsSuccessed)
+            {
+                return RedirectToAction("EditUser", "User", new { id = request.UserID });
 
-        //    }
-        //    return RedirectToAction("Index", "Home");
-        //}
-        //[HttpPost("change-password")]
-        //public async Task<IActionResult> ChangePassword(string newPassword, string confirmPassword)
-        //{
-        //    var result = await _userApiClient.ChangePassword(id, newPassword);
-        //    if(result.IsSuccessed)
-        //    {
-        //        return RedirectToAction("DetailsMyself");
+            }
+            return RedirectToAction("Index", "Home");
+        }
 
-        //    }
-        //    return RedirectToAction("Index", "Home");
-        //}
-
-        [HttpGet("bloggers")]
-        public async Task<IActionResult> ListBlogger()
+        [HttpGet("user/bloggers")]
+        public async Task<IActionResult> GetBloggerPaging(int PageIndex = 1, int PageSize = 5, String Keyword ="")
         {
             var request = new GetUserPagingRequest()
             {
-                PageIndex = 1,
-                PageSize = 10
+                PageIndex = PageIndex,
+                PageSize = PageSize,
+                Keyword = Keyword
             };
             var data = await _userApiClient.GetPagings(request);
-            return View(data);
+            return new OkObjectResult(data);
+        }
+        [HttpGet("view-list-blogger")]
+        public IActionResult ListBlogger()
+        {
+            return View();  
         }
 
         [HttpGet("delete/{UserID}")]
-         public IActionResult Delete(Guid UserID)
+         public async Task<IActionResult> DeleteAsync(Guid UserID)
         {
-            return null;
-
+            var result = await _userApiClient.Delete(UserID);
+            if (result)
+            {
+                return RedirectToAction("ListBlogger");
+            }
+            return RedirectToAction("Index");
         }
 
         [Route("/view/add-blogger")]
@@ -172,12 +179,22 @@ namespace NewsWebsite.WebApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> AddBloggerAsync(UserCreateRequest request)
         {
+
             var result = await _userApiClient.AddBlogger(request);
-            if(result == true)
-            {
-                return RedirectToAction("ListBlogger");
-            }
-            return RedirectToAction("ViewAddBlogger");
+            return RedirectToAction("ListBlogger");
+        }
+
+
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+        [HttpPost("check-phone-email-exist")]
+        public async Task<IActionResult> CheckExist(string email, string phone)
+        {
+            var result = await _userApiClient.CheckExist(email, phone);
+            return new OkObjectResult(result);
         }
     }
 }

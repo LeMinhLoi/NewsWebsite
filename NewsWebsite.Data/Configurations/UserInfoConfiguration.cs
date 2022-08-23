@@ -19,6 +19,7 @@ namespace NewsWebsite.Data.Configurations
             builder.Property(x => x.Gender).IsRequired();
             builder.Property(x => x.IsActive).IsRequired();
             builder.Property(x => x.IdImageAvatar).IsRequired(false);
+            builder.Property(x => x.DateCreate).IsRequired();
         }
     }
 }

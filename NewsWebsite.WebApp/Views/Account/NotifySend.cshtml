@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+@{
+    ViewData["Title"] = "Đã gửi email";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Tittle"]</title>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/LoginPage/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="card card-container">
+            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+            <div>Chúng tôi đã gửi đến bạn một link để xác nhận mật khẩu</div>
+            <a href="/login">Trở lại đăng nhập</a>
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+</body>
+</html>
+

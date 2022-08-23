@@ -11,6 +11,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NewsWebsite.Application.Account;
+using NewsWebsite.Application.Catalog;
+using NewsWebsite.Application.News;
 using NewsWebsite.Application.User;
 using NewsWebsite.Data.EF;
 using NewsWebsite.Data.Entities;
@@ -40,8 +43,9 @@ namespace NewsWebsite.BackendApi
             services.AddTransient<UserManager<UserInfo>, UserManager<UserInfo>>();
             services.AddTransient<SignInManager<UserInfo>, SignInManager<UserInfo>>();
             services.AddTransient<RoleManager<WebRole>, RoleManager<WebRole>>();
-            
-            
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<ICatalogService, CatalogService>();
+            services.AddTransient<INewsService, NewsService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -86,10 +90,11 @@ namespace NewsWebsite.BackendApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseHttpsRedirection();
+
             app.UseAuthentication();
+
             app.UseRouting();
 
             app.UseAuthorization();

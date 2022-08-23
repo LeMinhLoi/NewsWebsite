@@ -549,7 +549,8 @@ namespace NewsWebsite.Data.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(max)")
+                        .IsUnicode(false);
 
                     b.Property<DateTime>("DateCreate")
                         .HasColumnType("datetime2");
@@ -560,9 +561,13 @@ namespace NewsWebsite.Data.Migrations
                     b.Property<bool>("IsAccept")
                         .HasColumnType("bit");
 
+                    b.Property<string>("SrcCoverImage")
+                        .HasColumnType("varchar(max)")
+                        .IsUnicode(false);
+
                     b.Property<string>("Tittle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(max)")
+                        .IsUnicode(false);
 
                     b.Property<int>("ViewCount")
                         .HasColumnType("int");
@@ -575,11 +580,12 @@ namespace NewsWebsite.Data.Migrations
                         new
                         {
                             IdNews = new Guid("6d26e9ea-3b32-44be-ac21-090c06bbf14e"),
-                            Content = "<p><b>Hi! Đây là một bài báo viết về thể thao.</b></p><p><u>Chị bảy đang chuồn khỏi MU</u></p>",
-                            DateCreate = new DateTime(2022, 10, 10, 2, 3, 4, 0, DateTimeKind.Unspecified),
+                            Content = "<p>Erik ten Hag đ&atilde; sớm phải nhận những &aacute;p lực, v&agrave; người h&acirc;m mộ Quỷ đỏ c&oacute; l&yacute; do để b&agrave;y tỏ sự kh&ocirc;ng h&agrave;i l&ograve;ng.</p>",
+                            DateCreate = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IdAuthor = new Guid("135cc273-c797-480f-ac39-cabfde885094"),
                             IsAccept = false,
-                            Tittle = "SƯ TRỐN CHẠY",
+                            SrcCoverImage = "https://i.ibb.co/XjTB50K/chohaha.jpg",
+                            Tittle = "Câu chuyện của MU",
                             ViewCount = 0
                         });
                 });
@@ -774,6 +780,9 @@ namespace NewsWebsite.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DoB")
                         .HasColumnType("datetime2");
 
@@ -864,7 +873,8 @@ namespace NewsWebsite.Data.Migrations
                         {
                             Id = new Guid("f2c7b584-2bec-4a0c-896b-0aae5084afe0"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c4bbc029-0b38-4bb8-bbe3-7fe76cc2b69e",
+                            ConcurrencyStamp = "0f7bbaf5-cc57-40d2-baff-60bbc7b4a31b",
+                            DateCreate = new DateTime(2022, 8, 17, 9, 59, 14, 693, DateTimeKind.Local).AddTicks(6439),
                             DoB = new DateTime(2001, 10, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "loileminh@gmail.com",
                             EmailConfirmed = true,
@@ -876,7 +886,7 @@ namespace NewsWebsite.Data.Migrations
                             LockoutEnabled = false,
                             NickName = "leminhloi",
                             NormalizedUserName = "leminhloi",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH6shzjDWTqc7jQBKgJ4gA3jKxO0Bpr6mhJmBV8Dt4BnwYpXyzzTL3lgfKaCkRbbwQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH5DUBb5IqlKiquFXUfdb3RzvtWPpa3Aojfj4PG2/0qrtA4Flnf/penTLHGwDxMR4w==",
                             PhoneNumber = "1000000001",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -887,7 +897,8 @@ namespace NewsWebsite.Data.Migrations
                         {
                             Id = new Guid("135cc273-c797-480f-ac39-cabfde885094"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "632608a7-abe3-4480-8267-7001274d739e",
+                            ConcurrencyStamp = "f298e460-5fda-4267-93d5-237c499cf1f0",
+                            DateCreate = new DateTime(2022, 8, 17, 9, 59, 14, 714, DateTimeKind.Local).AddTicks(6575),
                             DoB = new DateTime(2001, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "huynhnhat@gmail.com",
                             EmailConfirmed = true,
@@ -898,7 +909,7 @@ namespace NewsWebsite.Data.Migrations
                             LockoutEnabled = false,
                             NickName = "naruto",
                             NormalizedUserName = "nhathuynh",
-                            PasswordHash = "AQAAAAEAACcQAAAAENW6V8tBbYpwaagyCkjTUsG0Fj1iRSVBQqik/c8KglTxNsjbkpsPM56hl50Yygo//g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIopCujmejQquWx+3yZK5RuKDlXktKtiqzniMzRj+cm0NHgaoNgi6QzK5EmIw4JBgA==",
                             PhoneNumber = "1000000002",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -909,7 +920,8 @@ namespace NewsWebsite.Data.Migrations
                         {
                             Id = new Guid("4008d551-f305-4bc5-b143-6caa9e7e6acb"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "527e50c7-9f09-4d75-9a87-e07f34b955b4",
+                            ConcurrencyStamp = "183d9c6b-cb9d-4cfa-9ea7-0d65ca772ea5",
+                            DateCreate = new DateTime(2022, 8, 17, 9, 59, 14, 726, DateTimeKind.Local).AddTicks(6926),
                             DoB = new DateTime(2001, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "daiphuoc@gmail.com",
                             EmailConfirmed = true,
@@ -920,7 +932,7 @@ namespace NewsWebsite.Data.Migrations
                             LockoutEnabled = false,
                             NickName = "sasuke",
                             NormalizedUserName = "phuochuynh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFXHYDQxpIcyg1R45g5ncGscfgwIwvZ4DIuYbRMkreEXdEb8szLa3NNCrGj6XleGzA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHLHkCU0afokbci7h6VxNVDCIwCCqm8jHrPaJ2aeD0o/2OExTVvGTVUtLYZBqBd1NQ==",
                             PhoneNumber = "1000000003",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -965,7 +977,7 @@ namespace NewsWebsite.Data.Migrations
                         new
                         {
                             Id = new Guid("68f98061-01ba-4263-ab94-65a0cb908ab7"),
-                            ConcurrencyStamp = "ba3973d4-25e5-410e-b610-bdacc14ae2c0",
+                            ConcurrencyStamp = "5a26f202-ec2e-4560-9522-480b211fa5a1",
                             Description = "Đây là manger",
                             Name = "Manager",
                             NormalizedName = "Manager"
@@ -973,7 +985,7 @@ namespace NewsWebsite.Data.Migrations
                         new
                         {
                             Id = new Guid("e2189174-217b-4540-9563-49f24a901712"),
-                            ConcurrencyStamp = "b34dbfa9-712b-46db-b8a1-56f214a8607c",
+                            ConcurrencyStamp = "4cc87390-91c9-48e1-b09d-0b098e6137ad",
                             Description = "Đây là Viewer",
                             Name = "Viewer",
                             NormalizedName = "Viewer"
@@ -981,7 +993,7 @@ namespace NewsWebsite.Data.Migrations
                         new
                         {
                             Id = new Guid("3f2be8b9-769d-49f5-8387-f34413daa629"),
-                            ConcurrencyStamp = "8c39b333-f707-41d1-9866-371faf3ad745",
+                            ConcurrencyStamp = "627a1cce-e259-4e5d-9d66-94dbc5b63425",
                             Description = "Đây là Blogger",
                             Name = "Blogger",
                             NormalizedName = "Blogger"

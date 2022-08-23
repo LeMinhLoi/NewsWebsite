@@ -15,6 +15,7 @@ namespace NewsWebsite.Data.Entities
         public Guid? IdImageAvatar { get; set; }
         public ImageUser ImageUser { get; set; }
         public bool IsActive { get; set; }
+        public DateTime DateCreate { get; set; }
         public List<AnnouncementInUser> AnnouncementInUsers { get; set; }
         public List<CatalogInUser> CatalogInUsers { get; set; }
         public List<HistoryLike> HistoryLikes { get; set; }

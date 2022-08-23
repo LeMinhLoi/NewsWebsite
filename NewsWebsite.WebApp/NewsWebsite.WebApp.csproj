@@ -5,16 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap-fileinput\.github\CODE_OF_CONDUCT.md" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\.github\config.yml" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\.github\CONTRIBUTING.md" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\.github\FUNDING.yml" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\.github\PULL_REQUEST_TEMPLATE.md" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\.github\stale.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NewsWebsite.BackendApi\NewsWebsite.BackendApi.csproj" />
     <ProjectReference Include="..\NewsWebsite.IntegrationApi\NewsWebsite.IntegrationApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewsWebsite.Application.User;
-using NewsWebsite.Utilities.AttributeForUploadFile;
 using NewsWebsite.ViewModel.Image.ImageUser;
+using NewsWebsite.ViewModel.ModelValidate;
+using NewsWebsite.ViewModel.PasswordVM;
 using NewsWebsite.ViewModel.User;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NewsWebsite.BackendApi.Controllers
@@ -47,9 +45,10 @@ namespace NewsWebsite.BackendApi.Controllers
             return Ok(user);
         }
         //---------------------------------------------------------------------------------------
-        [HttpPut("{Id}")]
+        [HttpPost("{Id}")]
+        [Consumes("multipart/form-data")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateInfo(Guid Id, [FromBody] UserUpdateRequest request)
+        public async Task<IActionResult> UpdateInfo(Guid Id, [FromForm] UserUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -60,11 +59,14 @@ namespace NewsWebsite.BackendApi.Controllers
                 return BadRequest(result);
             }
             return Ok(result);
+
+            //return Ok();
         }
         //---------------------------------------------------------------------------------------
         [HttpPost("image/update")]
+        [Consumes("multipart/form-data")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateImageUser([FromForm]ImageUserUpdateRequest request)
+        public async Task<IActionResult> UpdateImageUser([FromForm] ImageUserUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -77,14 +79,14 @@ namespace NewsWebsite.BackendApi.Controllers
             return Ok(result);
         }
         //---------------------------------------------------------------------------------------
-        [HttpPut("password/{Id}")]
+        [HttpPost("password/update/")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdatePassword(Guid Id, [FromBody] string Password)
+        public async Task<IActionResult> UpdatePassword(PasswordVM request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userService.UpdatePassword(Id, Password);
+            var result = await _userService.UpdatePassword(request.UserID, request.NewPass);
             if (!result.IsSuccessed)
             {
                 return BadRequest(result);
@@ -110,14 +112,15 @@ namespace NewsWebsite.BackendApi.Controllers
         //---------------------------------------------------------------------------------------
         [HttpGet("bloggers/paging/")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAllPaging([FromQuery] int PageIndex, [FromQuery] int PageSize, [FromQuery] Guid roleID)
+        public async Task<IActionResult> GetAllPaging([FromQuery] int PageIndex, [FromQuery] int PageSize, [FromQuery] Guid roleID, [FromQuery] String Keyword)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var request = new GetUserPagingRequest()
             {
                 PageIndex = PageIndex,
-                PageSize = PageSize
+                PageSize = PageSize,
+                Keyword = Keyword
             };
             var result = await _userService.GetUserPagingByRole(request, roleID);
             if (result == null)
@@ -148,6 +151,18 @@ namespace NewsWebsite.BackendApi.Controllers
         {
             var image = await _userService.GetImageUserById(id);
             return Ok(image);
+        }
+        //----------------------------------------------------------------------------------------
+        [HttpPost("check-exist")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CheckEmailAndPhoneExist(PhoneEmailVM request)
+        {
+            var result = await _userService.CheckExistEmailAndPhone(request.Email, request.Phone);
+            if (result.IsSuccessed)
+            {
+                Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }

@@ -1,39 +1,55 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
 @{
     @model NewsWebsite.ViewModel.Image.ImageUser.ImageUserUpdateRequest
     Layout = "~/Views/Shared/_OptionsInfoUserLayout.cshtml";
-            
-
 }
+
 <div class="col-md-9 m-0 mt-2">
     <div class="card mb-2 bg-light">
-        <h1 class="text-center mt-2 mb-3">Ảnh đại diện</h1>
-        @if (ViewData["path"] != null)
-        {
-            <div class="text-center">
-                <img src=@ViewData["path"] alt="" width="120px" height="160px">
+        <div class="card-header text-center bg-info mb-2">
+            <h3 class="card-title text-white">Ảnh đại diện</h3>
+        </div>
+        
+        <form id="formUpdateImage" enctype="multipart/form-data" asp-controller="User" asp-action="UpdateImage" method="post">
+            <input asp-for=@Model.Id type="text" value=@ViewData["UserID"].ToString() hidden />
+            <div class="d-flex justify-content-lg-center text-center">
+                @if (ViewData["path"] != null)
+                {
+                    <input id="pathImage" hidden type="text" value=@ViewData["path"].ToString() hidden />
+                }else{
+                    <input id="pathImage" hidden type="text" value="https://as1.ftcdn.net/v2/jpg/03/53/11/00/1000_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg" hidden />
+                }
+                <div class="kv-avatar">
+                    <div class="file-loading ">
+                        <input enctype="multipart/form-data" id="avatar-1" asp-for=@Model.ImageFile type="file" required>
+                    </div>
+                </div>
             </div>
-        }
-        else
-        {
-            <div class="text-center text-danger">Không tìm thấy ảnh người dùng</div>
-        }
-        <br />
-        <br />
-        <br />
-        <form asp-controller="User" asp-action="UpdateImageUser" method="post">
-            <input asp-for="Id" type="text" value=@ViewData["UserID"].ToString() hidden />
-            <div class="text-center">
-                <label for="img" style="font-size: large; font-weight: 600;">
-                    Chọn ảnh:
-                </label>
-                <input asp-for="ImageFile" type="file" id="img" name="img" accept="image/*">
-            </div>
+            <br />
             <div class="d-flex justify-content-center pt-3">
-                <button type="submit" class="btn btn-warning btn-lg ms-2 mb-2">Đặt làm ảnh đại diện</button>
+                <button id="btnUpdateImage" class="btn btn-outline-primary btn-lg ms-2 mb-2">Đặt làm ảnh đại diện</button>
             </div>
         </form>
+        
     </div>
+    <div id="kv-avatar-errors-1" class="text-center" style="display:none"></div>
 </div>
+
+@section Styles{
+    <link href="~/css/ImageUserPartialView/styles.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-fileinput/css/fileinput.css" rel="stylesheet" />
+}
+@section Scripts{
+    
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/plugins/buffer.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/plugins/filetype.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/plugins/piexif.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/plugins/sortable.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/fileinput.js"></script>
+    <script src="~/app/controllers/GetImageUser/Index.js"></script>
+
+}

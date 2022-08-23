@@ -21,7 +21,6 @@ namespace NewsWebsite.Data.Extension
                new Catalog() { IdCatalog = 7, Name = "Môi trường", Description = "Đây là mục môi trường" },
                new Catalog() { IdCatalog = 8, Name = "Văn hóa", Description = "Đây là mục văn hóa" },
                new Catalog() { IdCatalog = 9, Name = "Pháp luật", Description = "Đây là mục pháp luật" }
-
                );
 
             var managerId = new Guid("68f98061-01ba-4263-ab94-65a0cb908ab7");
@@ -78,8 +77,9 @@ namespace NewsWebsite.Data.Extension
                     PasswordHash = hasher.HashPassword(null, "Loi@1234"),
                     DoB = new DateTime(2001, 10, 4),
                     IsActive = true,
-                    PhoneNumber = "1000000001",
+                    PhoneNumber = "0674123453",
                     Gender = true,
+                    DateCreate = DateTime.Now,
                     SecurityStamp = string.Empty,
                     IdImageAvatar = idAvaterLoi,
                 },
@@ -99,6 +99,7 @@ namespace NewsWebsite.Data.Extension
                     PhoneNumber = "1000000002",
                     Gender = true,
                     SecurityStamp = string.Empty,
+                    DateCreate = DateTime.Now,
                     IdImageAvatar = null
                 },
                 new UserInfo()
@@ -117,6 +118,7 @@ namespace NewsWebsite.Data.Extension
                     PhoneNumber = "1000000003",
                     Gender = true,
                     SecurityStamp = string.Empty,
+                    DateCreate = DateTime.Now,
                     IdImageAvatar = null
                 }
                );
@@ -151,13 +153,14 @@ namespace NewsWebsite.Data.Extension
                 {
                     IdNews = idNews,
                     IdAuthor = idNhat,
-                    DateCreate = new DateTime(2022, 10, 10, 2,3,4),
-                    Content = "<p><b>Hi! Đây là một bài báo viết về thể thao.</b></p><p><u>Chị bảy đang chuồn khỏi MU</u></p>",
+                    DateCreate = new DateTime(2022, 10, 10),
+                    Content = @"<p>Erik ten Hag đ&atilde; sớm phải nhận những &aacute;p lực, v&agrave; người h&acirc;m mộ Quỷ đỏ c&oacute; l&yacute; do để b&agrave;y tỏ sự kh&ocirc;ng h&agrave;i l&ograve;ng.</p>",
                     ViewCount = 0,
-                    Tittle = "SƯ TRỐN CHẠY",
-                    IsAccept = false
+                    Tittle = "Câu chuyện của MU",
+                    IsAccept = false,
+                    SrcCoverImage = @"https://i.ibb.co/XjTB50K/chohaha.jpg"
                 }
-                );
+                ) ;
             modelBuilder.Entity<Comment>().HasData(
                 new Comment()
                 {

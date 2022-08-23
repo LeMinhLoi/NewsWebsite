@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @model NewsWebsite.ViewModel.News.NewsCreateRequest
+    @using NewsWebsite.ViewModel.Catalog
+
+}
+@section Scripts{
+    <script src="~/lib/jquery/jquery.js"></script>
+    @*<script src="https://rawgit.com/dbrekalo/attire/master/dist/js/build.min.js"></script>*@
+    <script src="~/lib/fast-select/fastselect.standalone.js"></script>
+    <script>
+        $('.multipleSelect').fastselect();
+    </script>
+    <script src="~/lib/ckeditor/ckeditor.js" charset="utf-8"></script>
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('#ArticleTitle');
+            CKEDITOR.replace('#CoverImage');
+            CKEDITOR.replace('#Description');
+        });
+    </script>
+    <script src="~/app/controllers/News/Create/Index.js"></script>
+    
+}
+@section Styles{
+    <link rel="stylesheet" href="~/lib/fast-select/fastselect.css" />
+}
+
+<div class="card m-0 bg-light">
+    <h1 class="text-center mt-2">Tạo bài viết</h1>
+    <br />
+    <form method="post">
+        <div class="mx-4">
+            <h2>Thể loại</h2>
+            <select id="mySelect" class="multipleSelect form-select form-select-lg" multiple>
+                @foreach (var item in ViewData["ListCatalog"] as List<CatalogVM>)
+                {
+                    <option value=@item.Id>@item.Name</option>
+                }
+            </select>
+        </div>
+
+        <input id="txtId" type="text" class="form-control form-control-lg"
+               value=@ViewData["UserID"] hidden />
+        <div class="form-outline mb-4 mx-4">
+            <label class="form-label" style="font-weight: 500;">
+                <h2>Tiêu đề bài viết</h2>
+            </label>
+            <textarea id="ArticleTitle" class="ckeditor" rows="3"></textarea>
+        </div>
+        <div class="col-6 form-outline mb-4 mx-4">
+            <label class="form-label" style="font-weight: 500;">
+                <h2>Ảnh bài viết</h2>
+            </label>
+            <textarea id="CoverImage" class="ckeditor" rows="8"></textarea>
+        </div>
+        <div class="form-outline mb-4 mx-4">
+            <label class="form-label" style="font-weight: 500;">
+                <h2>Nội dung</h2>
+            </label>
+            <textarea id="Description" class="ckeditor" rows="8"></textarea>
+        </div>
+        <div class="mb-4 mx-4">
+            <button id="btnCreateNews" class="btn btn-outline-primary">Submit</button>
+        </div>
+    </form>
+</div>
+

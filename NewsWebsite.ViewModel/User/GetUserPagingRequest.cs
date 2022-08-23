@@ -7,6 +7,6 @@ namespace NewsWebsite.ViewModel.User
 {
     public class GetUserPagingRequest : PagingRequestBase
     {
-        //public string Keyword { get; set; }
+        public string Keyword { get; set; }
     }
 }

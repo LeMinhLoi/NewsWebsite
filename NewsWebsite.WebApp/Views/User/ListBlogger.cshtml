@@ -1,71 +1,73 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    @model NewsWebsite.ViewModel.Pagination.PagedResult<NewsWebsite.ViewModel.User.UserVM>
+﻿@section Scripts{
+    <script src="~/plugin/mustache.min.js"></script>
+    <script src="~/plugin/jquery.twbsPagination.min.js"></script>
+    <script src="~/app/controllers/User/Pagination/Index.js"></script>
+    <script>
+        var ctl = new PaginationController();
+        ctl.initialize();
+    </script>
+}
+@section Styles{
+    <link href="~/css/MyCustom.css" rel="stylesheet" />
 }
 
-<script src="~/lib/font-awesome/js/fontawesome.js"></script>
-<div class="card mb-4">
-    <div class="card-body">
-        <div class="table-title">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h2>Manage <b>Bloggers</b></h2>
+<div class="mx-2 mt-2">
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-4 p">
+                <h4>Danh sách <b>Blogger</b></h4>
+            </div>
+            <div class="col-sm-4 p-0">
+                <div class="search-box">
+                    <input type="text" id="txtSearch" class="form-control" placeholder="Tìm kiếm theo họ và tên">
                 </div>
-                <div class="col-sm-4">
-                    <div class="search-box">
-                        <!-- <i class="material-icons">&#xE8B6;</i> -->
-                        <input type="text" class="form-control" placeholder="Search&hellip;">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Blogger</span></a>
-                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
-                </div>
-
+            </div>
+            <div class="col-sm-4 d-flex justify-content-between align-items-baseline">
+                <a id="btnFilter" class="btn btn-outline-info" data-toggle="modal"><i class="fa-solid fa-magnifying-glass"></i><span> Tìm kiếm</span></a>
+                <a href="/view/add-blogger" class="btn btn-info" data-toggle="modal"><i class="fa-solid fa-user-plus"></i><span> Thêm blogger</span></a>
             </div>
         </div>
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Last Name</th>
-                    <th>First Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-
-
-                @foreach (var item in Model.Items)
-                {
-                    <tr>
-                        <th>@Html.DisplayFor(modelItem => item.LastName)</th>
-                        <th>@Html.DisplayFor(modelItem => item.FirstName)</th>
-                        <th>@Html.DisplayFor(modelItem => item.Email)</th>
-                        <th>@Html.DisplayFor(modelItem => item.Phone)</th>
-                        <td>
-                            <a href="/detail/info/{@item.Id}" data-toggle="modal"><i class="fa-solid fa-eye" title="View"></i></a> |
-                            <a href="/delete/{@item.Id}" data-toggle="modal"><i class="fa-solid fa-trash" title="Delete"></i></a>
-                        </td>
-                    </tr>
-                }
-
-            </tbody>
-        </table>
-        @*<div class="clearfix">
-            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-            <ul class="pagination">
-                <li class="page-item disabled"><a href="#">Previous</a></li>
-                <li class="page-item"><a href="#" class="page-link">1</a></li>
-                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                <li class="page-item"><a href="#" class="page-link">Next</a></li>
-            </ul>
-        </div>*@
     </div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="mycolor">STT</th>
+                <th class="mycolor">Họ</th>
+                <th class="mycolor">Tên</th>
+                <th class="mycolor">Email</th>
+                <th class="mycolor">Số điện thoại</th>
+                <th class="mycolor">Ngày tạo</th>
+                <th class="text-center mycolor">Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="tbl-content">
+        </tbody>
+    </table>
+    <div class="py-2 d-flex justify-content-end">
+        <div></div>
+        <div id="pagination" class="pagination"></div>
+    </div>
+    
 </div>
+
+
+<script id="table-template" type="x-tmpl-mustache">
+        <tr>
+            <td>{{STT}}</td>
+            <td>{{LastName}}</td>
+            <td>{{FirstName}}</td>
+            <td>{{Email}}</td>
+            <td>{{Phone}}</td>
+            <td>{{DateCreate}}</td>
+            <td class="text-center">
+                <a class="mx-1" href="/edit/info/{{Id}}" data-toggle="modal"><i class="fa-solid fa-user-pen" title="Chỉnh sửa"></i></a>
+                <a class="btn-edit mx-1" href="#" data-id="{{Id}}" data-toggle="modal"><i class="fa-solid fa-eye text-secondary" title="Xem chi tiết"></i></a>
+                <a class="mx-1" href="/delete/{{Id}}" onclick="return confirm('Bạn chắc chắn muốn xóa người này?');" data-toggle="modal"><i class="fa-solid fa-trash text-danger" title="Xóa"></i></a>
+            </td>
+        </tr>
+</script>
+
+<partial name="_DetailUser.cshtml" />
+
+
+

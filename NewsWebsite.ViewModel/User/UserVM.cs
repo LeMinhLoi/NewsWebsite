@@ -11,10 +11,10 @@ namespace NewsWebsite.ViewModel.User
         public string FirstName { get; set; }
         public string NickName { get; set; }
         public DateTime DoB { get; set; }
+        public DateTime DateCreate { get; set; }
         public bool Gender { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        //public bool IsActived { get; set; }
-        //public string PathImageAvatar { get; set; }
+        public string PathImageAvatar { get; set; }
     }
 }

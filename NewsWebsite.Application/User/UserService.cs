@@ -39,27 +39,18 @@ namespace NewsWebsite.Application.User
             _webHostEnvironment = webHostEnvironment;
             _config = config;
         }
-
-        public Task<ApiResultVM<bool>> AddImage(Guid id, UserUpdateRequest request)
-        {
-            throw new NotImplementedException();
-        }
         public async Task<ApiResultVM<string>> AddUser(UserCreateRequest request)
         {
+            if (await _userManager.Users.AnyAsync(x => x.Email == request.Email))
+            {
+                return new ApiErrorResultVM<string>("Email này đã tồn tại!");
+            }
+            if (await _userManager.Users.AnyAsync(x => x.PhoneNumber == request.Phone))
+            {
+                return new ApiErrorResultVM<string>("Số điện thoại này đã tồn tại!");
+            }
             //create GUID for user
             Guid guidIDUser = Guid.NewGuid();
-            //while (true)
-            //{
-            //    if (await _userManager.FindByIdAsync(guidID.ToString()) == null)
-            //    {
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        guidID = new Guid();
-            //    }    
-            //}
-            //create info user
             var hasher = new PasswordHasher<IdentityUser>();
             var userInfo = new UserInfo()
             {
@@ -73,7 +64,9 @@ namespace NewsWebsite.Application.User
                 Email = request.Email,
                 IsActive = request.IsActived,
                 UserName = request.UserName,
-                PasswordHash = hasher.HashPassword(null, request.Password)
+                PasswordHash = hasher.HashPassword(null, request.Password),
+                SecurityStamp = new Guid().ToString(),
+                DateCreate = DateTime.Now
             };
             //create role of user
             var userRole = new IdentityUserRole<Guid>()
@@ -131,14 +124,12 @@ namespace NewsWebsite.Application.User
             }
             
         }
-
-
         public async Task<ApiResultVM<string>> Authencate(LoginRequest request)
         {
-            var user = await _userManager.FindByNameAsync(request.UserName.Trim());
+            var user = await _userManager.FindByEmailAsync(request.MyEmail);
             if (user == null)
             { 
-                return new ApiErrorResultVM<string>("Tài khoản không tồn tại"); 
+                return new ApiErrorResultVM<string>("EMAIL không tồn tại"); 
             }
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, false);
             if (!result.Succeeded)
@@ -152,7 +143,7 @@ namespace NewsWebsite.Application.User
                     new Claim(ClaimTypes.Email,user.Email),
                     new Claim(ClaimTypes.GivenName,user.FirstName),
                     new Claim(ClaimTypes.Role, string.Join(";",roles)),
-                    new Claim(ClaimTypes.Name, request.UserName),
+                    new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.HomePhone, user.PhoneNumber),
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                 }
@@ -175,8 +166,6 @@ namespace NewsWebsite.Application.User
         {
             throw new NotImplementedException();
         }
-    
-
         public async Task<ApiResultVM<string>> Delete(Guid id)
         {
             var usr = await _websiteDBContext.Users.Include(a => a.ImageUser).FirstOrDefaultAsync(a => a.Id == id);
@@ -192,23 +181,27 @@ namespace NewsWebsite.Application.User
             }
             try
             {
+                if (usr.ImageUser != null)
+                {
+                    _websiteDBContext.ImageUsers.Remove(usr.ImageUser);
+                }
+                
                 _websiteDBContext.UserInfos.Remove(usr);
                 await _websiteDBContext.SaveChangesAsync();
+                if (pathImage != null)
+                {
+                    File.Delete(pathImage.ToString());
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 return new ApiErrorResultVM<string>("Not success");
             }
-            if(pathImage != null)
-            {
-                File.Delete(pathImage.ToString());
-            }
+            
             return new ApiSuccessResultVM<string>();
 
         }
-
-        
         public async Task<ApiResultVM<UserVM>> GetById(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -216,11 +209,11 @@ namespace NewsWebsite.Application.User
             {
                 return new ApiErrorResultVM<UserVM>("Not found by Id");
             }
-            //ImageUser imageUser = null;
-            //if(user.IdImageAvatar != null)
-            //{
-            //    imageUser = await _websiteDBContext.ImageUsers.FindAsync(user.IdImageAvatar);
-            //}
+            ImageUser imageUser = null;
+            if (user.IdImageAvatar != null)
+            {
+                imageUser = await _websiteDBContext.ImageUsers.FindAsync(user.IdImageAvatar);
+            }
             var userVM = new UserVM()
             {
                 Id = user.Id,
@@ -232,7 +225,7 @@ namespace NewsWebsite.Application.User
                 Phone = user.PhoneNumber,
                 Email = user.Email,
                 //IsActived = user.IsActive,
-                //PathImageAvatar = (imageUser != null) ? imageUser.Path : null,
+                PathImageAvatar = (imageUser != null) ? imageUser.Path : null,
             };
             return new ApiSuccessResultVM<UserVM>(userVM);
         }
@@ -244,10 +237,13 @@ namespace NewsWebsite.Application.User
                         join r in _websiteDBContext.WebRoles on h.RoleId equals r.Id
                         where r.Id == idRole
                         select ui;
+            if (!string.IsNullOrEmpty(request.Keyword))
+            {
+                query = query.Where(x => x.FirstName.Contains(request.Keyword) || x.LastName.Contains(request.Keyword));
+            }
             //2. Paging
             int totalRow = await query.CountAsync();
-            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
-                .Include(x => x.ImageUser)
+            var data = await query.OrderByDescending(x => x.DateCreate).Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .Select(x => new UserVM()
                 {
@@ -259,6 +255,7 @@ namespace NewsWebsite.Application.User
                     Gender = x.Gender,
                     Phone = x.PhoneNumber,
                     Email = x.Email,
+                    DateCreate = x.DateCreate
                     //IsActived = x.IsActive,
                     //PathImageAvatar = (x.ImageUser != null) ? x.ImageUser.Path : "Not found"
                 }).ToListAsync();
@@ -272,35 +269,88 @@ namespace NewsWebsite.Application.User
             };
             return pagedResult;
         }
-
-        
-
         public async Task<ApiResultVM<string>> UpdateImage(ImageUserUpdateRequest request)
         {
-            var imageUser = await _websiteDBContext.ImageUsers.FindAsync(request.Id);
-            if(imageUser == null)
-            {
-                return new ApiErrorResultVM<string>("Not found images!");
-            }
-            if(request.ImageFile.Length > 0)
+            var user = await _websiteDBContext.UserInfos.FindAsync(request.Id);
+            if (user.IdImageAvatar != null)//if image exist
             {
                 try
                 {
-                    if (!Directory.Exists(_webHostEnvironment.WebRootPath + SystemConstants.pathImageUser))
+                    var imageUser = await _websiteDBContext.ImageUsers.FindAsync(user.IdImageAvatar);
+                    try
                     {
-                        Directory.CreateDirectory(_webHostEnvironment.WebRootPath + SystemConstants.pathImageUser);
+                        if (imageUser.Path != null)
+                        {
+                            File.Delete(_webHostEnvironment.WebRootPath + imageUser.Path);//delete old image
+                        }
+                        
                     }
-                    using (FileStream fileStream = System.IO.File.Create(_webHostEnvironment.WebRootPath + imageUser.Path))
+                    catch (Exception e)
+                    {
+                        string a = e.ToString();
+                        return new ApiErrorResultVM<string>(e.ToString());
+                    }
+                    
+                    String nameFile = RandomString.Result(10);
+                    String newPathFile = SystemConstants.pathImageUser + nameFile + ".png";
+                    using (FileStream fileStream = System.IO.File.Create(_webHostEnvironment.WebRootPath + newPathFile))
                     {
                         await request.ImageFile.CopyToAsync(fileStream);
                         await fileStream.FlushAsync();
                     }
+                    
+                    imageUser.Path = newPathFile;
+                    _websiteDBContext.ImageUsers.Update(imageUser);
+                    _websiteDBContext.UserInfos.Update(user);
+                    await _websiteDBContext.SaveChangesAsync();
                     return new ApiSuccessResultVM<string>();
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
-                    return new ApiErrorResultVM<string>(ex.ToString());
+
+                    return new ApiErrorResultVM<string>(e.ToString());
                 }
+                
+            }
+            else//if image not exist
+            {
+                try
+                {
+                    var idImageUser = new Guid();
+                    //create image of user
+                    //first: create guid of image
+                    ImageUser imageUser = null;
+                    if (request.ImageFile != null)
+                    {
+                        if (!Directory.Exists(_webHostEnvironment.WebRootPath + SystemConstants.pathImageUser))
+                        {
+                            Directory.CreateDirectory(_webHostEnvironment.WebRootPath + SystemConstants.pathImageUser);
+                        }
+                        String nameFile = RandomString.Result(10);
+                        String pathFile = SystemConstants.pathImageUser + nameFile + ".png";
+                        using (FileStream fileStream = System.IO.File.Create(_webHostEnvironment.WebRootPath + pathFile))
+                        {
+                            await request.ImageFile.CopyToAsync(fileStream);
+                            await fileStream.FlushAsync();
+
+                        }
+                        imageUser = new ImageUser()
+                        {
+                            IdImage = idImageUser,
+                            Path = pathFile
+                        };
+                        user.ImageUser = imageUser;
+                        _websiteDBContext.UserInfos.Update(user);
+                        await _websiteDBContext.SaveChangesAsync();
+                        return new ApiSuccessResultVM<string>();
+                    }
+                }
+                catch (Exception e)
+                {
+
+                    return new ApiErrorResultVM<string>(e.ToString());
+                }
+                
             }
             return new ApiErrorResultVM<string>("No image to update!");
         }
@@ -323,21 +373,17 @@ namespace NewsWebsite.Application.User
             };
             return new ApiSuccessResultVM<ImageUserVM>(imageUserVM);
         }
-
-
-
-
         public async Task<ApiResultVM<bool>> UpdateInfo(Guid id, UserUpdateRequest request)
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id))
             {
-                return new ApiErrorResultVM<bool>("Email existed!");
+                return new ApiErrorResultVM<bool>("Email đã tồn tại!");
             }
             if (await _userManager.Users.AnyAsync(x => x.PhoneNumber == request.Phone && x.Id != id))
             {
-                return new ApiErrorResultVM<bool>("Phone existed!");
+                return new ApiErrorResultVM<bool>("Số điện thoại đã tồn tại!");
             }
-            var user = await _userManager.FindByIdAsync(id.ToString());
+            var user = await _websiteDBContext.UserInfos.FindAsync(id);
             user.PhoneNumber = request.Phone;
             user.Email = request.Email;
             user.LastName = request.LastName;
@@ -346,12 +392,99 @@ namespace NewsWebsite.Application.User
             user.Gender = request.Gender;
             user.DoB = request.DoB;
             user.IsActive = request.IsActived;
-            var result = await _userManager.UpdateAsync(user);
-            if (result.Succeeded)
+            if(request.ImageUser != null)
             {
-                return new ApiSuccessResultVM<bool>();
+                if (user.IdImageAvatar != null)//if image exist
+                {
+                    try
+                    {
+                        var imageUser = await _websiteDBContext.ImageUsers.FindAsync(user.IdImageAvatar);
+                        try
+                        {
+                            if (imageUser.Path != null)
+                            {
+                                File.Delete(_webHostEnvironment.WebRootPath + imageUser.Path);//delete old image
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+                            string a = e.ToString();
+                        }
+
+                        String nameFile = RandomString.Result(10);
+                        String newPathFile = SystemConstants.pathImageUser + nameFile + ".png";
+                        using (FileStream fileStream = System.IO.File.Create(_webHostEnvironment.WebRootPath + newPathFile))
+                        {
+                            await request.ImageUser.CopyToAsync(fileStream);
+                            await fileStream.FlushAsync();
+                        }
+
+                        imageUser.Path = newPathFile;
+                        _websiteDBContext.ImageUsers.Update(imageUser);
+                        //_websiteDBContext.UserInfos.Update(user);
+                        //await _websiteDBContext.SaveChangesAsync();
+                        //return new ApiSuccessResultVM<string>();
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+                }
+                else//if image not exist
+                {
+                    try
+                    {
+                        var idImageUser = new Guid();
+                        //create image of user
+                        //first: create guid of image
+                        ImageUser imageUser = null;
+                        if (request.ImageUser != null)
+                        {
+                            if (!Directory.Exists(_webHostEnvironment.WebRootPath + SystemConstants.pathImageUser))
+                            {
+                                Directory.CreateDirectory(_webHostEnvironment.WebRootPath + SystemConstants.pathImageUser);
+                            }
+                            String nameFile = RandomString.Result(10);
+                            String pathFile = SystemConstants.pathImageUser + nameFile + ".png";
+                            using (FileStream fileStream = System.IO.File.Create(_webHostEnvironment.WebRootPath + pathFile))
+                            {
+                                await request.ImageUser.CopyToAsync(fileStream);
+                                await fileStream.FlushAsync();
+
+                            }
+                            imageUser = new ImageUser()
+                            {
+                                IdImage = idImageUser,
+                                Path = pathFile
+                            };
+                            user.ImageUser = imageUser;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+                }
             }
-            return new ApiErrorResultVM<bool>("Cập nhật không thành công");
+
+            try
+            {
+                _websiteDBContext.UserInfos.Update(user);
+                await _websiteDBContext.SaveChangesAsync();
+                return new ApiSuccessResultVM<bool>();
+                //var result = await _userManager.UpdateAsync(user);
+                //if (result.Succeeded)
+                //{
+                //    return new ApiSuccessResultVM<bool>();
+                //}
+            }
+            catch (Exception e)
+            {
+                return new ApiErrorResultVM<bool>("Cập nhật không thành công");
+            }
         }
         public async Task<ApiResultVM<string>> UpdatePassword(Guid id, string password)
         {
@@ -376,10 +509,33 @@ namespace NewsWebsite.Application.User
 
                 return new ApiErrorResultVM<string>("Change fail!");
             }
-            
-            
         }
 
-        
+        public async Task<ApiResultVM<string>> CheckExistEmailAndPhone(string email, string phone)
+        {
+            bool checkPhone = false;
+            bool checkEmail = false;
+            if (await _userManager.Users.AnyAsync(x => x.Email == email))
+            {
+                checkEmail = true;
+            }
+            if (await _userManager.Users.AnyAsync(x => x.PhoneNumber == phone))
+            {
+                checkPhone = true;
+            }
+            if(checkPhone && checkEmail)
+            {
+                return new ApiErrorResultVM<string>("Số điện thoại và email này đã tồn tại!");
+            }
+            if(checkEmail && !checkPhone)
+            {
+                return new ApiErrorResultVM<string>("Email này đã tồn tại!");
+            }
+            if (!checkEmail && checkPhone)
+            {
+                return new ApiErrorResultVM<string>("Số điện thoại này đã tồn tại!");
+            }
+            return new ApiSuccessResultVM<string>();
+        }
     }
 }

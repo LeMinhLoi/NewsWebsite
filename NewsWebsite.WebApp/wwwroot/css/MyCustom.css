@@ -1,0 +1,16 @@
+﻿.error {
+    color: #F00;
+    background-color: #FFF;
+    font-size: 16px;
+}
+table.table-bordered {
+    margin-top: 20px;
+}
+/*remove black line between head and content*/
+
+.table > :not(:first-child) {
+    border-top: 0;
+}
+.mycolor {
+    color: #143483
+}

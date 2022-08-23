@@ -8,12 +8,13 @@ namespace NewsWebsite.Data.Entities
     {
         public Guid IdNews { get; set; }
         public string Tittle { get; set; }
+        public string SrcCoverImage { get; set; }
+        public string Content { get; set; }
         public DateTime DateCreate { get; set; }
         public int ViewCount { get; set; }
-        public bool IsAccept { get; set; }
-        public string Content { get; set; }
         public Guid IdAuthor { get; set; }
-        //public UserInfo UserInfo { get; set; }
+        public bool IsAccept { get; set; }
+
         public List<HistoryLike> HistoryLikes { get; set; }
         public List<HistoryView> HistoryViews{ get; set; }
         public List<Comment> Comments{ get; set; }

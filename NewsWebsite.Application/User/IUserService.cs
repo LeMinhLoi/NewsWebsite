@@ -20,12 +20,12 @@ namespace NewsWebsite.Application.User
         Task<ApiResultVM<string>> UpdatePassword(Guid id, string password);
 
 
-        Task<ApiResultVM<bool>> AddImage(Guid id, UserUpdateRequest request);
         Task<ApiResultVM<string>> AddUser(UserCreateRequest request);
 
 
         Task<ApiResultVM<string>> Delete(Guid id);
-        
+        Task<ApiResultVM<string>> CheckExistEmailAndPhone(string email, string phone);
+
         Task<ApiResultVM<UserVM>> GetById(Guid id);
         Task<ApiResultVM<ImageUserVM>> GetImageUserById(Guid id);
         Task<PagedResult<UserVM>> GetUserPagingByRole(GetUserPagingRequest request, Guid idRole);

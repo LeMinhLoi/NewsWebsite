@@ -15,14 +15,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link href="~/css/ForLogin/style.css" rel="stylesheet" />
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="~/css/LoginPage/style.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
 
 </head>
 <body>
     <div class="container">
-        
+
         <div class="card card-container">
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
@@ -36,20 +36,25 @@
             </div>
             <form class="form-signin" asp-action="Index" asp-controller="Login" method="post">
                 <span id="reauth-email" class="reauth-email"></span>
-                <input asp-for="UserName" type="text" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
-                <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <input asp-for="MyEmail" type="text" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Mật khẩu" required>
                 <div id="remember" class="checkbox">
                     <label>
-                        <input asp-for="RememberMe" type="checkbox" value="remember-me">Ghi nhớ trong lần đăng nhập tiếp theo
+                        <input asp-for="RememberMe" type="checkbox"> Ghi nhớ đăng nhập
                     </label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Đăng nhập</button>
-            </form><!-- /form -->
-            <a href="#" class="forgot-password">
+                <br />
+                <button class="btn btn-primary" type="submit">Đăng nhập</button>
+            </form>
+            <a href="/Account/ForgotPassword" class="forgot-password">
                 Quên mật khẩu?
             </a>
-        </div><!-- /card-container -->
-    </div><!-- /container -->
+        </div>
+    </div>
 </body>
 </html>
+
+
+
+
 

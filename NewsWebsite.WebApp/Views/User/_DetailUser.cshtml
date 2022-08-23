@@ -1,0 +1,77 @@
+﻿
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xem chi tiết</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        Họ
+                    </label>
+                    <input id="txtLastName" type="text" class="form-control form-control-lg" readonly />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        Tên
+                    </label>
+                    <input id="txtFirstName" type="text" class="form-control form-control-lg" readonly />
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        NickName
+                    </label>
+                    <input id="txtNickName" type="text" class="form-control form-control-lg" readonly/>
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        Số điện thoại
+                    </label>
+                    <input id="txtPhone" type="text" class="form-control form-control-lg" readonly/>
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">
+                        Email
+                    </label>
+                    <input id="txtEmail" type="text" class="form-control form-control-lg" readonly/>
+                </div>
+                <div class="form-outline mb-4 mx-4">
+                    <label class="form-label" style="font-weight: 500;">Ngày sinh</label>
+                    <div class="form-group col-sm-12 mb-10">
+                        <input id="txtDoB" class="form-control form-control-lg" type="text" readonly/>
+                    </div>
+                </div>
+                <div class="row mb-4 mx-4">
+                    <div class="d-md-flex justify-content-around align-items-start mb-3 mt-3 py-2 col-md-8">
+                        <h6 class="mb-0 me-4" style="font-weight: 500; font-size: larger;">
+                            Giới tính:
+                        </h6>
+                        <div class="form-check mb-0 me-4">
+                            <input class="form-check-input" type="radio"
+                                   id="femaleGenderRadio"/>
+                            <label class="form-check-label" for="femaleGenderRadio">Nữ</label>
+                        </div>
+
+
+                        <div class="form-check mb-0 me-4">
+                            <input class="form-check-input" type="radio"
+                                   id="maleGenderRadio"/>
+                            <label class="form-check-label" for="maleGenderRadio">Nam</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+    </div>
+</div>
