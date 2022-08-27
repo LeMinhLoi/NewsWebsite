@@ -24,20 +24,31 @@ namespace NewsWebsite.WebApp.Controllers
         }
 
         [HttpGet("/news/create-news")]
-        public async Task<IActionResult> CreateNewsAsync()
+        public async Task<IActionResult> CreateNewsView()
         {
             Guid id = new Guid(HttpContext.Session.GetString("UserID"));
             ViewData["UserID"] = id;
-            var a = await _catalogApiClient.GetAll();
-            ViewData["ListCatalog"] = a;
+            var allCatalog = await _catalogApiClient.GetAll();
+            ViewData["ListCatalog"] = allCatalog;
             return View();
         }
 
         [HttpPost("news/create")]
-        public IActionResult CreateNews(NewsCreateRequest request)
+        public async Task<IActionResult> CreateNewsAsync(NewsCreateRequest request)
         {
-            var result = _newsApiClient.CreateNews(request);
-            return Ok();
+            var result = await _newsApiClient.CreateNews(request);
+            return new OkObjectResult(result);
+        }
+        [HttpGet("news/get")]
+        public async Task<IActionResult> GetListNews(GetListNewsPagingRequest request)
+        {
+            var response = await _newsApiClient.GetListNewsPaging(request);
+            return new OkObjectResult(response);
+        }
+        [HttpGet("/news/list-news")]
+        public IActionResult ListNewsView()
+        {
+            return View();
         }
     }
 }

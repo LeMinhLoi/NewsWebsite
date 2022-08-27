@@ -8,4 +8,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
 	config.height = eval(this.element.$.rows * 40) + 'px';
+	config.entities = false;
+	config.entities_latin = false;
 };

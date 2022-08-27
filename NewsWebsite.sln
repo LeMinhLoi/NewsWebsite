@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsWebsite.WebApp", "NewsW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsWebsite.IntegrationApi", "NewsWebsite.IntegrationApi\NewsWebsite.IntegrationApi.csproj", "{0E8C438F-5486-4D65-B780-90AFC1D614CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsWebsite.WebBlogger", "NewsWebsite.WebBlogger\NewsWebsite.WebBlogger.csproj", "{8F0A0595-07FC-45D6-B087-88509BB7F3B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{0E8C438F-5486-4D65-B780-90AFC1D614CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E8C438F-5486-4D65-B780-90AFC1D614CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E8C438F-5486-4D65-B780-90AFC1D614CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F0A0595-07FC-45D6-B087-88509BB7F3B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F0A0595-07FC-45D6-B087-88509BB7F3B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F0A0595-07FC-45D6-B087-88509BB7F3B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F0A0595-07FC-45D6-B087-88509BB7F3B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

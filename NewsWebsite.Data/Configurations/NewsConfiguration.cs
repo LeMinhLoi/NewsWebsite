@@ -13,11 +13,11 @@ namespace NewsWebsite.Data.Configurations
         {
             builder.ToTable("Newss");
             builder.HasKey(x => x.IdNews);
-            builder.Property(x => x.Tittle).IsUnicode(false);
+            builder.Property(x => x.Tittle).IsRequired().IsUnicode();
             builder.Property(x => x.DateCreate).IsRequired();
-            builder.Property(x => x.SrcCoverImage).IsUnicode(false);
+            builder.Property(x => x.SrcCoverImage).IsRequired(false);
             builder.Property(x => x.ViewCount);
-            builder.Property(x => x.Content).IsUnicode(false);
+            builder.Property(x => x.Content).IsRequired();
             builder.Property(x => x.IsAccept).IsRequired();
             builder.Property(x => x.IdAuthor).IsRequired();
             builder.Property(x => x.Content).IsRequired();

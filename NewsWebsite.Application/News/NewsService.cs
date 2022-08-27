@@ -59,24 +59,49 @@ namespace NewsWebsite.Application.News
 
         public async Task<PagedResult<NewsVM>> GetListNewsPaging(GetListNewsPagingRequest request)
         {
-            ////1.Select join
-            //var query = from news in _websiteDBContext.Newss
-            //            join nic in _websiteDBContext.NewsInCatalogs on news.IdNews equals nic.IdNews
-            //            join c in _websiteDBContext.Catalogs on nic.IdCatalog equals c.IdCatalog
+            //1.Select join
+            var query = from news in _websiteDBContext.Newss
+                        join user in _websiteDBContext.UserInfos on news.IdAuthor equals user.Id
+                        select new { news, user };
+
+            //2. Paging
+            int totalRow = await query.CountAsync();
+            var data = await query.OrderByDescending(x => x.news.DateCreate).Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(x => new NewsVM()
+                {
+                    IdNews = x.news.IdNews,
+                    DateCreate = x.news.DateCreate,
+                    NameAuthor = x.user.LastName + " " + x.user.FirstName,
+                    Title = x.news.Tittle,
+                    Catalogs = (from ca in _websiteDBContext.Catalogs
+                                join k in _websiteDBContext.NewsInCatalogs on ca.IdCatalog equals k.IdCatalog
+                                where k.IdNews == x.news.IdNews
+                                select ca.Name).ToList(),
+                }).ToListAsync();
+            //var data = await (from news in _websiteDBContext.Newss
             //            join user in _websiteDBContext.UserInfos on news.IdAuthor equals user.Id
-            //            where c.IdCatalog == request.CatalogID
-            //            select new { news, c, user };
-            ////2. Filter
-            //if (request.CatalogID != 0)
-            //{
-            //    query = query.Where(p => p.c.IdCatalog == request.CatalogID);
-            //}
-            ////3. Paging
-            //int totalRow = await query.CountAsync();
-            //var data = await query.OrderByDescending(x => x.news.DateCreate).Skip((request.PageIndex - 1) * request.PageSize)
-            //    .Take(request.PageSize)
-            //    .Select()
-            throw new NotImplementedException();
+            //            join newscatalog in _websiteDBContext.NewsInCatalogs on news.IdNews equals newscatalog.IdNews
+            //            join catalog in _websiteDBContext.Catalogs on newscatalog.IdCatalog equals catalog.IdCatalog
+            //            group catalog by new { news.IdNews, news.DateCreate, user.LastName, user.FirstName, news.Tittle } into g
+            //            select new NewsVM()
+            //            {
+            //                IdNews = g.Key.IdNews,
+            //                DateCreate = g.Key.DateCreate,
+            //                NameAuthor = "",
+            //                Title = g.Select(x=>x.Name).Count().ToString(),
+            //                Catalogs = null
+            //            }).ToListAsync();
+
+            //3. Select and projection
+            var pagedResult = new PagedResult<NewsVM>()
+            {
+                TotalRecords = data.Count(),
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
+                Items = data
+            };
+            return pagedResult;
         }
     }
 }

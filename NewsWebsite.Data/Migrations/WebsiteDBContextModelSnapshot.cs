@@ -549,8 +549,7 @@ namespace NewsWebsite.Data.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("varchar(max)")
-                        .IsUnicode(false);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreate")
                         .HasColumnType("datetime2");
@@ -562,12 +561,12 @@ namespace NewsWebsite.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("SrcCoverImage")
-                        .HasColumnType("varchar(max)")
-                        .IsUnicode(false);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tittle")
-                        .HasColumnType("varchar(max)")
-                        .IsUnicode(false);
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .IsUnicode(true);
 
                     b.Property<int>("ViewCount")
                         .HasColumnType("int");
@@ -873,8 +872,8 @@ namespace NewsWebsite.Data.Migrations
                         {
                             Id = new Guid("f2c7b584-2bec-4a0c-896b-0aae5084afe0"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0f7bbaf5-cc57-40d2-baff-60bbc7b4a31b",
-                            DateCreate = new DateTime(2022, 8, 17, 9, 59, 14, 693, DateTimeKind.Local).AddTicks(6439),
+                            ConcurrencyStamp = "2ef4cd6f-989f-4ba0-ac9e-254185b060aa",
+                            DateCreate = new DateTime(2022, 8, 24, 14, 49, 54, 532, DateTimeKind.Local).AddTicks(5712),
                             DoB = new DateTime(2001, 10, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "loileminh@gmail.com",
                             EmailConfirmed = true,
@@ -886,8 +885,8 @@ namespace NewsWebsite.Data.Migrations
                             LockoutEnabled = false,
                             NickName = "leminhloi",
                             NormalizedUserName = "leminhloi",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH5DUBb5IqlKiquFXUfdb3RzvtWPpa3Aojfj4PG2/0qrtA4Flnf/penTLHGwDxMR4w==",
-                            PhoneNumber = "1000000001",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOVtRLqYvRugk+3EqmdxewZxZd16nRBnTEgQFIP1Z7YQjlq4IfTjysWEsSs3vU3d0w==",
+                            PhoneNumber = "0674123453",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -897,8 +896,8 @@ namespace NewsWebsite.Data.Migrations
                         {
                             Id = new Guid("135cc273-c797-480f-ac39-cabfde885094"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f298e460-5fda-4267-93d5-237c499cf1f0",
-                            DateCreate = new DateTime(2022, 8, 17, 9, 59, 14, 714, DateTimeKind.Local).AddTicks(6575),
+                            ConcurrencyStamp = "e5d520be-029c-4a3e-b029-71bd98f253e4",
+                            DateCreate = new DateTime(2022, 8, 24, 14, 49, 54, 545, DateTimeKind.Local).AddTicks(7891),
                             DoB = new DateTime(2001, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "huynhnhat@gmail.com",
                             EmailConfirmed = true,
@@ -909,7 +908,7 @@ namespace NewsWebsite.Data.Migrations
                             LockoutEnabled = false,
                             NickName = "naruto",
                             NormalizedUserName = "nhathuynh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIopCujmejQquWx+3yZK5RuKDlXktKtiqzniMzRj+cm0NHgaoNgi6QzK5EmIw4JBgA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ7GQKUmFW/iHcAV8VjIAgMlijGRVmu9hE9IvLlkxELpA8E046AUHF1hcUxMIllWRg==",
                             PhoneNumber = "1000000002",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -920,8 +919,8 @@ namespace NewsWebsite.Data.Migrations
                         {
                             Id = new Guid("4008d551-f305-4bc5-b143-6caa9e7e6acb"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "183d9c6b-cb9d-4cfa-9ea7-0d65ca772ea5",
-                            DateCreate = new DateTime(2022, 8, 17, 9, 59, 14, 726, DateTimeKind.Local).AddTicks(6926),
+                            ConcurrencyStamp = "3ec8c1c5-0e11-4eb1-b562-08f809a475c5",
+                            DateCreate = new DateTime(2022, 8, 24, 14, 49, 54, 558, DateTimeKind.Local).AddTicks(4212),
                             DoB = new DateTime(2001, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "daiphuoc@gmail.com",
                             EmailConfirmed = true,
@@ -932,7 +931,7 @@ namespace NewsWebsite.Data.Migrations
                             LockoutEnabled = false,
                             NickName = "sasuke",
                             NormalizedUserName = "phuochuynh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHLHkCU0afokbci7h6VxNVDCIwCCqm8jHrPaJ2aeD0o/2OExTVvGTVUtLYZBqBd1NQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN+nVV18PP9fx8kdvm1kRqfBDqvLCqMhJMQm/enElPrJLMr84KIHQ6IJYFwko23ElQ==",
                             PhoneNumber = "1000000003",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -977,7 +976,7 @@ namespace NewsWebsite.Data.Migrations
                         new
                         {
                             Id = new Guid("68f98061-01ba-4263-ab94-65a0cb908ab7"),
-                            ConcurrencyStamp = "5a26f202-ec2e-4560-9522-480b211fa5a1",
+                            ConcurrencyStamp = "9fd291b3-aca9-47ce-9cd2-6d353c85f852",
                             Description = "Đây là manger",
                             Name = "Manager",
                             NormalizedName = "Manager"
@@ -985,7 +984,7 @@ namespace NewsWebsite.Data.Migrations
                         new
                         {
                             Id = new Guid("e2189174-217b-4540-9563-49f24a901712"),
-                            ConcurrencyStamp = "4cc87390-91c9-48e1-b09d-0b098e6137ad",
+                            ConcurrencyStamp = "a618f348-e715-4ffb-a683-98542de7eb17",
                             Description = "Đây là Viewer",
                             Name = "Viewer",
                             NormalizedName = "Viewer"
@@ -993,7 +992,7 @@ namespace NewsWebsite.Data.Migrations
                         new
                         {
                             Id = new Guid("3f2be8b9-769d-49f5-8387-f34413daa629"),
-                            ConcurrencyStamp = "627a1cce-e259-4e5d-9d66-94dbc5b63425",
+                            ConcurrencyStamp = "f790f4e6-9102-48d5-b733-d6ae5e852693",
                             Description = "Đây là Blogger",
                             Name = "Blogger",
                             NormalizedName = "Blogger"

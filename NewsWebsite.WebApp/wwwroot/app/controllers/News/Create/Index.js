@@ -40,8 +40,11 @@
                     Content: content,
                     Catalogs: arrIdCatalog
                 },
-                success: function () {
-                    alert("cuong ml")
+                success: function (response) {
+                    if (response.isSuccessed) {
+                        alert("cuong ml")
+                    }
+                    
                 },
                 error: function () {
                     console.log("Lỗi");

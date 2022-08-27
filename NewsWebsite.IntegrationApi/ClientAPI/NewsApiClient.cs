@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using NewsWebsite.IntegrationApi.InterfaceAPI;
 using NewsWebsite.ViewModel.ApiResult;
 using NewsWebsite.ViewModel.News;
+using NewsWebsite.ViewModel.Pagination;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace NewsWebsite.IntegrationApi.ClientAPI
 {
-    public class NewsApiClient : INewsApiClient
+    public class NewsApiClient : BaseApiClient, INewsApiClient 
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
@@ -21,7 +22,7 @@ namespace NewsWebsite.IntegrationApi.ClientAPI
 
         public NewsApiClient(IHttpClientFactory httpClientFactory,
                    IHttpContextAccessor httpContextAccessor,
-                    IConfiguration configuration)
+                    IConfiguration configuration) : base(httpClientFactory, httpContextAccessor, configuration)
         {
 
             _configuration = configuration;
@@ -46,5 +47,14 @@ namespace NewsWebsite.IntegrationApi.ClientAPI
 
             return JsonConvert.DeserializeObject<ApiErrorResultVM<string>>(result);
         }
+
+        public async Task<PagedResult<NewsVM>> GetListNewsPaging(GetListNewsPagingRequest request)
+        {
+            var data = await GetAsync<PagedResult<NewsVM>>(
+                $"/api/news/get-list-news?PageIndex={request.PageIndex}" +
+                $"&PageSize={request.PageSize}");
+            return data;
+        }
+
     }
 }

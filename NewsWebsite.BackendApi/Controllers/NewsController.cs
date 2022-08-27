@@ -19,10 +19,16 @@ namespace NewsWebsite.BackendApi.Controllers
             _newsService = newsService;
         }
         [HttpPost("create")]
-        public IActionResult CreateNews([FromBody] NewsCreateRequest request)
+        public async Task<IActionResult> CreateNewsAsync([FromBody] NewsCreateRequest request)
         {
-            var result = _newsService.CreateNews(request);
-            return Ok();
+            var result = await _newsService.CreateNews(request);
+            return Ok(result);
+        }
+        [HttpGet("get-list-news")]
+        public async Task<IActionResult> GetNewsAsync([FromQuery] GetListNewsPagingRequest request)
+        {
+            var result = await _newsService.GetListNewsPaging(request);
+            return Ok(result);
         }
     }
 }
